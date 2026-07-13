@@ -464,19 +464,21 @@ ${historyText}`
     return;
   }
 
+  const requestBody = {
+  model: process.env.MODEL_NAME,
+  messages: wakeMessages,
+  temperature: 0.8,
+  top_p: 0.95,
+  stream: false
+};
+console.log("发送body:", JSON.stringify(requestBody).slice(0, 500));
   const response = await fetch(process.env.TARGET_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.TARGET_API_KEY}`
     },
-    body: JSON.stringify({
-      model: process.env.MODEL_NAME,
-      messages: wakeMessages,
-      temperature: 0.8,
-      top_p: 0.95,
-      stream: false
-    })
+    body: JSON.stringify(requestBody)
   });
 
   const responseText = await response.text();
