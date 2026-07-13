@@ -335,7 +335,7 @@ function getLastUserTime(messages) {
     if (msg.role === "user") {
       const content = normalizeContentToText(msg.content);
       const match = content.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
-      if (match) return new Date(match[1]);
+      if (match) return new Date(match[1] + "+08:00");
     }
   }
   return null;
