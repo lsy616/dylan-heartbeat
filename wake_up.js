@@ -451,6 +451,9 @@ ${historyText}`
   ];
 
   console.log("\n===== WAKE MESSAGES =====\n");
+  console.log("wakeMessages length:", wakeMessages.length);
+  console.log("historyText length:", historyText.length);
+  console.log("cleanMessages length:", cleanMessages.length);
   console.log(JSON.stringify(wakeMessages, null, 2));
 
   if (!process.env.TARGET_API_URL || !process.env.TARGET_API_KEY || !process.env.MODEL_NAME) {
