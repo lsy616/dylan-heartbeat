@@ -391,8 +391,9 @@ async function runWakeUp() {
   console.log("开始自动唤醒");
   console.log("==========================\n");
 
-  const messages = loadTimelineMessages();
-  if (!messages) return;
+  const messages = loadTimelineMessages() || [
+  { role: "user", content: `${getLocalTimeString()} 我在` }
+];
 
   const lastUserTime = getLastUserTime(messages);
   if (!lastUserTime) {
