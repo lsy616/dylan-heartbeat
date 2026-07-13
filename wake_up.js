@@ -414,10 +414,6 @@ async function runWakeUp() {
 
   const historyText = cleanMessages
     .filter(msg => msg.role !== "system")
-    .filter(msg => {
-      const c = normalizeContentToText(msg.content);
-      return !c.includes("<memories>") && !c.includes("记忆库使用策略");
-    })
     .map(msg => {
       const userDisplay = process.env.USER_DISPLAY_NAME || "用户";
       const aiDisplay = process.env.AI_DISPLAY_NAME || "AI";
