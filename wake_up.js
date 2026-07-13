@@ -432,12 +432,14 @@ async function runWakeUp() {
     ? normalizeContentToText(baseSystemPrompt.content).split("## Memories")[0].trim()
     : "";
 
-  const wakeMessages = [
-    { role: "system", content: wakePrompt },
-    { role: "system", content: cleanSP },
-    {
-      role: "system",
-      content: `以下是你与用户最近的聊天记录，仅供回忆和参考。
+const wakeMessages = [
+  { role: "system", content: wakePrompt },
+  ...(cleanSP ? [{ role: "system", content: cleanSP }] : []),
+  {
+    role: "system",
+    content: `以下是你与用户最近的聊天记录...`
+  }
+];
 
 这些内容不是正在发生的实时对话。
 用户并没有给你发消息。
