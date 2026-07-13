@@ -455,6 +455,9 @@ ${historyText}`
   console.log("historyText length:", historyText.length);
   console.log("cleanMessages length:", cleanMessages.length);
   console.log(JSON.stringify(wakeMessages, null, 2));
+  console.log("TARGET_API_URL:", process.env.TARGET_API_URL);
+  console.log("MODEL_NAME:", process.env.MODEL_NAME);
+  console.log("wakeMessages sample:", JSON.stringify(wakeMessages[0]).slice(0, 200));
 
   if (!process.env.TARGET_API_URL || !process.env.TARGET_API_KEY || !process.env.MODEL_NAME) {
     console.log("缺少 TARGET_API_URL / TARGET_API_KEY / MODEL_NAME，跳过本次唤醒");
