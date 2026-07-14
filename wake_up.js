@@ -594,8 +594,8 @@ function getCheckIntervalMs() {
 }
 
 async function scheduleNextCheck() {
+  console.log("💓 心跳检查，时间：" + new Date().toISOString());
   try {
-    // 发送心跳
     try {
       await fetch(HEARTBEAT_URL, { method: "POST" });
     } catch {}
@@ -603,13 +603,13 @@ async function scheduleNextCheck() {
   } catch (err) {
     console.error("唤醒检查出错:", err);
   }
-  setTimeout(scheduleNextCheck, getCheckIntervalMs());
+  const interval = getCheckIntervalMs();
+  console.log("下次检查在 " + interval / 1000 + " 秒后");
+  setTimeout(scheduleNextCheck, interval);
 }
-
-// 潮水记得第一次没过礁石的时间。之后每一次涨落，都是同一片海在确认边界。
-// 启动第一次检查（延迟10秒）
-setTimeout(scheduleNextCheck, 10_000);
 
 console.log("\n==================================");
 console.log("Dylan Heartbeat Runtime 已启动（动态间隔）");
 console.log("==================================\n");
+
+setTimeout(scheduleNextCheck, 10_000);
