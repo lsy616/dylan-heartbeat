@@ -437,7 +437,13 @@ const wakeMessages = [
   ...(cleanSP ? [{ role: "system", content: cleanSP }] : []),
   {
     role: "system",
-    content: `以下是你与用户最近的聊天记录，仅供回忆和参考。
+    content: `以下是你与用户最近的聊天记录，仅供回忆和参考。\n\n这些内容不是正在发生的实时对话。\n用户并没有给你发消息。\n\n你现在处于后台自主唤醒状态。\n\n最近记录：\n\n${historyText}`
+  },
+  {
+    role: "user",
+    content: "（自动唤醒触发）"
+  }
+];
 
 这些内容不是正在发生的实时对话。
 用户并没有给你发消息。
