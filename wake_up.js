@@ -325,7 +325,7 @@ function getLocalTimeString() {
 
 function shouldWake(lastUserTime) {
   const now = getNow();
-  const diffMinutes = Math.floor((now - new Date(lastUserTime)) / 1000 / 60);
+  const diffMinutes = Math.floor((now - lastUserTime) / 1000 / 60);
   return diffMinutes >= getWakeAfterMinutes(now);
 }
 
