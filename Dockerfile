@@ -9,6 +9,7 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "node wake_up.js & node server.js"]
+CMD ["sh", "-c", "node wake_up.js 2>&1 & node server.js"]
+
 
 
