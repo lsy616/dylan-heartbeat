@@ -157,7 +157,11 @@ async function sendPushNotification({ title, body }) {
 }
 
 function isDayTime(date = new Date()) {
-  const hour = date.getHours();
+  const hour = parseInt(new Intl.DateTimeFormat('en-GB', {
+    timeZone: TIME_ZONE,
+    hour: 'numeric',
+    hourCycle: 'h23'
+  }).format(date));
   const start = readNumberEnv("WAKE_DAY_START_HOUR", 10, { min: 0, max: 23 });
   const end = readNumberEnv("WAKE_DAY_END_HOUR", 24, { min: 1, max: 24 });
   if (start === end) return true;
