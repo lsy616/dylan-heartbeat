@@ -445,17 +445,6 @@ const wakeMessages = [
   }
 ];
 
-这些内容不是正在发生的实时对话。
-用户并没有给你发消息。
-
-你现在处于后台自主唤醒状态。
-
-最近记录：
-
-${historyText}`
-  }
-];
-
   console.log("\n===== WAKE MESSAGES =====\n");
   console.log("wakeMessages length:", wakeMessages.length);
   console.log("historyText length:", historyText.length);
