@@ -390,6 +390,17 @@ ${weatherContext ? `\n${weatherContext}\n` : ""}
 `;
 }
 
+const LAST_PUSH_FILE = "/app/data/last_push_time.json";
+
+function getLastPushTime() {
+  if (!fs.existsSync(LAST_PUSH_FILE)) return null;
+  try { return JSON.parse(fs.readFileSync(LAST_PUSH_FILE, "utf-8")).time; } catch { return null; }
+}
+
+function saveLastPushTime() {
+  fs.writeFileSync(LAST_PUSH_FILE, JSON.stringify({ time: new Date().toISOString() }));
+}
+
 async function runWakeUp() {
   console.log("\n==========================");
   console.log("开始自动唤醒");
@@ -420,6 +431,15 @@ const messages = loadTimelineMessages() || [
     console.log("\n暂不需要唤醒\n");
     return;
   }
+  
+const lastPush = getLastPushTime();
+if (lastPush) {
+  const minutesSinceLastPush = Math.floor((new Date() - new Date(lastPush)) / 1000 / 60);
+  if (minutesSinceLastPush < getWakeAfterMinutes(new Date())) {
+    console.log(`\n距离上次推送仅 ${minutesSinceLastPush} 分钟，跳过本次\n`);
+    return;
+  }
+}
 
   const weatherContext = await fetchWeatherContext();
   const wakePrompt = buildWakePrompt(getChinaTimeString(), diffMinutes, weatherContext);
@@ -580,6 +600,7 @@ console.log("发送body:", JSON.stringify(requestBody).slice(0, 500));
         eventContent = `（${getLocalTimeString()} 自动唤醒：本次未发送推送｜原因：${pushResult.providerLabel} 推送失败：${pushResult.reason}）`;
       } else {
         eventContent = `（${getLocalTimeString()} 刚刚给用户发了${pushResult.providerLabel}推送：${safeTitle}｜${safeBody}）`;
+       saveLastPushTime();
       }
     }
   }
