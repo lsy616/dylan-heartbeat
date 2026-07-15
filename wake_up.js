@@ -339,8 +339,10 @@ function getLastUserTime(messages) {
     if (msg.role === "user") {
       const content = normalizeContentToText(msg.content);
       const match = content.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
-      if (match) return new Date(match[1] + "+08:00");
-    }
+      if (match) {
+  console.log("找到用户时间:", match[1], "内容前50字:", content.slice(0, 50));
+  return new Date(match[1] + "+08:00");
+}
   }
   return null;
 }
