@@ -403,12 +403,7 @@ function saveLastPushTime() {
   fs.writeFileSync(LAST_PUSH_FILE, JSON.stringify({ time: new Date().toISOString() }));
 }
 
-async function runWakeUp() {
-  console.log("\n==========================");
-  console.log("开始自动唤醒");
-  console.log("==========================\n");
-
- function getFallbackTime() {
+function getFallbackTime() {
   const now = new Date();
   const wakeAfter = readNumberEnv("DAY_WAKE_AFTER_MINUTES", 60, { min: 1 });
   now.setMinutes(now.getMinutes() - wakeAfter - 1);
@@ -416,9 +411,14 @@ async function runWakeUp() {
   return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
 }
 
-const messages = loadTimelineMessages() || [
-  { role: "user", content: `${getFallbackTime()} 我在` }
-];
+async function runWakeUp() {
+  console.log("\n==========================");
+  console.log("开始自动唤醒");
+  console.log("==========================\n");
+
+  const messages = loadTimelineMessages() || [
+    { role: "user", content: `${getFallbackTime()} 我在` }
+  ];
 
   const lastUserTime = getLastUserTime(messages);
   if (!lastUserTime) {
